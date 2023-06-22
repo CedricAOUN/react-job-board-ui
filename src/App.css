@@ -1,0 +1,16 @@
+
+
+#root {
+    width: 100%;
+}
+
+
+.nav {
+    border: 5px solid red;
+    background-color: darkgray;
+}
+
+.nav li:first-of-type {
+    margin-right: auto;
+    margin-left: 20px;
+}

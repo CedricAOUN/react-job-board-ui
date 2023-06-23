@@ -1,6 +1,5 @@
-import { Fragment, useContext } from "react";
-import { List, ListItemButton, Typography } from "@mui/material";
-import { UserContext } from "../../App";
+import { Fragment } from "react";
+import { ListItemButton, Typography } from "@mui/material";
 
 interface Props {
   title: string;

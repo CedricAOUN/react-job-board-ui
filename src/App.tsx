@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Button, Container } from "@mui/material";
+import React, { useState } from "react";
+import { Container, Grid } from "@mui/material";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import "@fontsource/roboto/700.css";
-import { fetchJobs } from "./services/jobService";
-import Grid from "@mui/material/Grid";
 import JobGrid from "./components/job-components/JobGrid";
-import Upload from "./components/user-components/Upload";
-import { cvExists } from "./services/authService";
 
 export const UserContext = React.createContext(null);
 export const SearchContext = React.createContext(null);

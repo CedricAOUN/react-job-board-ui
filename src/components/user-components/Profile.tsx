@@ -143,7 +143,11 @@ export default function Profile({ onClick }: Props) {
                     </Typography>
                     <ConfirmationModal
                       title="Delete"
-                      desc="Are you sure you want to delete your account?"
+                      desc={
+                        <Typography>
+                          Are you sure you want to delete your account?{" "}
+                        </Typography>
+                      }
                       confirmFunc={() => {
                         onDelete();
                         handleClose();

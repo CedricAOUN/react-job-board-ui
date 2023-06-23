@@ -6,8 +6,8 @@ import {
   Grid,
   Typography,
   Button,
+  Box,
 } from "@mui/material";
-import { Box } from "@mui/material";
 import { UserContext } from "../../App";
 import { useForm } from "react-hook-form";
 import { createJob } from "../../services/jobService";

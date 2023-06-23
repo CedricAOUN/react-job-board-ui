@@ -1,12 +1,9 @@
 import { useEffect, useContext } from "react";
-import Grid from "@mui/material/Grid";
+import { Box, Button, TextField, Grid } from "@mui/material";
 import JobCard from "./JobCard";
 import { fetchJobs, jobsList } from "../../services/jobService";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { SearchContext } from "../../App";
 import { useForm } from "react-hook-form";
-import { Box } from "@mui/material";
 
 // Fetch jobs
 

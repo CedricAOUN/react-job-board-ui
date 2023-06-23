@@ -1,8 +1,5 @@
 import * as React from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Fade from "@mui/material/Fade";
-import { IconButton, Typography } from "@mui/material";
+import { Menu, Fade, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { UserContext } from "../App";
 import ConfirmationModal from "./ConfirmationModal";

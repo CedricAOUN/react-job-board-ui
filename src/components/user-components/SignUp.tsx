@@ -44,7 +44,6 @@ export default function SignUp() {
     setIsRecruiter,
     setCurrentEmail,
     setCurrentUserId,
-    setHasFile,
   } = useContext(UserContext);
   const [serverMsg, setServerMsg] = useState("");
   const form = useForm();
@@ -65,7 +64,6 @@ export default function SignUp() {
           setCurrentEmail(`${data.email}`);
           setIsLoggedIn(true);
           setIsRecruiter(data.recruiter);
-          setHasFile(res.data.hasFile);
           return;
         });
       })

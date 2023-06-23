@@ -43,6 +43,7 @@ export default function Profile({ onClick }: Props) {
     setIsLoggedIn,
     setIsRecruiter,
     setHasFile,
+    fileName,
   } = useContext(UserContext);
   const [passVerified, setPassVerified] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -112,6 +113,9 @@ export default function Profile({ onClick }: Props) {
               <Typography fontWeight={800}>CV:</Typography>
             </Grid>
             <Grid item xs={3}>
+              <Typography>
+                Current CV: {fileName ? fileName : "None"}
+              </Typography>
               <Upload />
             </Grid>
             <Grid item xs={6}>

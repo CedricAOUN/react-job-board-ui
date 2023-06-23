@@ -43,6 +43,7 @@ const Login = () => {
     setCurrentEmail,
     setCurrentUserId,
     setHasFile,
+    setFileName,
   } = useContext(UserContext);
   const [serverMsg, setServerMsg] = useState("");
   const form = useForm();
@@ -62,6 +63,7 @@ const Login = () => {
           setCurrentUserId(response.data.userId);
           response.data.userType == "regular" || setIsRecruiter(true);
           setHasFile(response.data.hasFile);
+          setFileName(response.data.fileName);
           return;
         } else {
           console.log(response.error);

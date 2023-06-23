@@ -5,7 +5,7 @@ import { UserContext } from "../../App";
 import { uploadFile } from "../../services/authService";
 
 function Upload() {
-  const { currentUserId, setHasFile } = useContext(UserContext);
+  const { currentUserId, setHasFile, setFileName } = useContext(UserContext);
   const form = useForm();
   const {
     register,
@@ -16,7 +16,7 @@ function Upload() {
   const onSubmit = (data) => {
     console.log(data.file);
     uploadFile(currentUserId, data.file[0]).then(() => setHasFile(true));
-    // uploadFile(currentUserId, data.f)
+    setFileName(data.file[0].name);
   };
 
   return (

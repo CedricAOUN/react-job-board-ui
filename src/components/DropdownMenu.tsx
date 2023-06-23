@@ -9,6 +9,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import JobCreate from "./job-components/JobCreate";
 import Profile from "./user-components/Profile";
 import MyJobs from "./job-components/MyJobs";
+import JobApplications from "./user-components/jobApplications";
 
 export default function DropdownMenu() {
   const {
@@ -61,6 +62,7 @@ export default function DropdownMenu() {
         TransitionComponent={Fade}
       >
         <Profile onClick={handleClose} />
+        <JobApplications></JobApplications>
         <MyJobs />
         <JobCreate />
         <ConfirmationModal

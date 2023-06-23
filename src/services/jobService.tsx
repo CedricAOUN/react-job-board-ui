@@ -59,3 +59,9 @@ export async function getCandidates(job_ids): Promise<any> {
     job_ids: job_ids,
   });
 }
+
+export async function getApplications(user_id): Promise<any> {
+  return await axios.post(`${url}applications`, {
+    user_id: user_id,
+  });
+}

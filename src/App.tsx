@@ -22,6 +22,7 @@ function App() {
   const [currentEmail, setCurrentEmail] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [hasFile, setHasFile] = useState(false);
+  const [fileName, setFileName] = useState("");
   const [jobs, setJobs] = useState([]);
 
   return (
@@ -40,6 +41,8 @@ function App() {
           setCurrentEmail: setCurrentEmail,
           hasFile: hasFile,
           setHasFile: setHasFile,
+          fileName: fileName,
+          setFileName: setFileName,
         }}
       >
         <Navbar></Navbar>

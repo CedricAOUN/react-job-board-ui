@@ -80,7 +80,7 @@ function JobCreate() {
         }}
         disabled={!isRecruiter}
       >
-        Add a Job
+        Add a Job {isRecruiter ? "" : "(Recruiters Only)"}
       </MenuItem>
       <Modal open={open} onClose={handleClose}>
         <Box

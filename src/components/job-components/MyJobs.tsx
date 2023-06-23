@@ -136,7 +136,7 @@ export default function MyJobs() {
         }}
         disabled={!isRecruiter}
       >
-        My Job Offers
+        My Jobs {isRecruiter ? "" : "(Recruiters Only)"}
       </MenuItem>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>

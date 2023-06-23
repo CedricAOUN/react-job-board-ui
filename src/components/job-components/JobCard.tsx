@@ -5,8 +5,10 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import RequirementsModal from "./RequirementsModal";
+import Link from "@mui/material/Link";
 import { UserContext } from "../../App";
 import { apply } from "../../services/jobService";
+import ConfirmationModal from "../ConfirmationModal";
 
 interface Props {
   title: string;
@@ -27,7 +29,8 @@ export default function JobCard({
   requirements,
   jobId,
 }: Props) {
-  const { isLoggedIn, currentUserId, hasFile } = useContext(UserContext);
+  const { isLoggedIn, currentUserId, hasFile, fileName } =
+    useContext(UserContext);
 
   const handleApply = async () => {
     await apply(currentUserId, jobId).catch((err) => {
@@ -38,19 +41,6 @@ export default function JobCard({
       }
     });
   };
-
-  let msg;
-  const renderMsg = () => {
-    if (!isLoggedIn) {
-      return (msg = "(Please Login)");
-    } else if (!hasFile) {
-      return (msg = "(Please upload a cv via the profile page)");
-    }
-  };
-
-  useEffect(() => {
-    renderMsg();
-  }, [isLoggedIn, hasFile]);
 
   return (
     <Fragment>
@@ -71,14 +61,28 @@ export default function JobCard({
             company={company}
             requirements={requirements}
           ></RequirementsModal>
-          <Button disabled={!isLoggedIn || !hasFile} onClick={handleApply}>
-            Apply
-            {!isLoggedIn
-              ? "(Please Login)"
-              : !hasFile
-              ? "(Please add a CV to your profile)"
-              : ""}
-          </Button>
+          <ConfirmationModal
+            confirmFunc={handleApply}
+            desc={
+              <Typography>
+                Are you sure you want to apply with CV:{" "}
+                <Link
+                  href={`http://localhost:3000/uploads/${currentUserId}.pdf`}
+                  target="_blank"
+                >
+                  {fileName}
+                </Link>
+              </Typography>
+            }
+            title={
+              !isLoggedIn
+                ? "Apply(Please Login)"
+                : !hasFile
+                ? "Apply(Please add a CV to your profile)"
+                : "Apply"
+            }
+            disabled={!isLoggedIn || !hasFile}
+          ></ConfirmationModal>
         </CardActions>
       </Card>
     </Fragment>

@@ -9,10 +9,11 @@ import { MenuItem } from "@mui/material";
 
 interface Props {
   confirmFunc(): void;
-  desc: string;
-  title: string;
+  desc: JSX.Element;
+  title: any;
   isMenu?: boolean;
   bColor?: string;
+  disabled?: boolean;
 }
 
 export default function ConfirmationModal({
@@ -21,6 +22,7 @@ export default function ConfirmationModal({
   title,
   isMenu = false,
   bColor = "primary",
+  disabled = false,
 }: Props) {
   const [open, setOpen] = React.useState(false);
 
@@ -35,11 +37,19 @@ export default function ConfirmationModal({
   return (
     <>
       {isMenu ? (
-        <MenuItem onClick={handleClickOpen} sx={{ color: bColor }}>
+        <MenuItem
+          onClick={handleClickOpen}
+          sx={{ color: bColor }}
+          disabled={disabled}
+        >
           {title}
         </MenuItem>
       ) : (
-        <Button onClick={handleClickOpen} sx={{ color: bColor }}>
+        <Button
+          onClick={handleClickOpen}
+          sx={{ color: bColor }}
+          disabled={disabled}
+        >
           {title}
         </Button>
       )}

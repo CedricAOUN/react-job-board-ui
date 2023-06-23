@@ -2,14 +2,14 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { UserContext } from "../App";
 import ConfirmationModal from "./ConfirmationModal";
 import JobCreate from "./job-components/JobCreate";
 import Profile from "./user-components/Profile";
 import MyJobs from "./job-components/MyJobs";
-import JobApplications from "./user-components/jobApplications";
+import JobApplications from "./user-components/JobApplications";
 
 export default function DropdownMenu() {
   const {
@@ -18,6 +18,9 @@ export default function DropdownMenu() {
     setIsLoggedIn,
     setIsRecruiter,
     setHasFile,
+    setFileName,
+    setCurrentUserId,
+    setCurrentEmail,
   } = React.useContext(UserContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -31,7 +34,10 @@ export default function DropdownMenu() {
     setCurrentUser(""),
       setIsLoggedIn(false),
       setIsRecruiter(false),
-      setHasFile(false);
+      setHasFile(false),
+      setFileName("");
+    setCurrentUserId(Number);
+    setCurrentEmail("");
   };
 
   return (
@@ -68,7 +74,7 @@ export default function DropdownMenu() {
         <ConfirmationModal
           isMenu={true}
           title="Logout"
-          desc="Are you sure you want to Logout?"
+          desc={<Typography>Are you sure you want to Logout?</Typography>}
           bColor="#E30613"
           confirmFunc={() => {
             handleLogout();

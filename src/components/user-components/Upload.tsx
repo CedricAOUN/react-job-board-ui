@@ -5,7 +5,8 @@ import { UserContext } from "../../App";
 import { uploadFile } from "../../services/authService";
 
 function Upload() {
-  const { currentUserId, setHasFile, setFileName } = useContext(UserContext);
+  const { currentUserId, setHasFile, setFileName, fileName } =
+    useContext(UserContext);
   const form = useForm();
   const {
     register,
@@ -23,15 +24,17 @@ function Upload() {
     <>
       <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
         <TextField
-          size="small"
           type="file"
+          fullWidth
           helperText={
             !!errors.file
               ? errors.file?.message.toString()
-              : "Choose a .PDF file"
+              : fileName.length
+              ? `Current CV: ${fileName}`
+              : "Current CV: None"
           }
           error={!!errors.file}
-          inputProps={{ accept: "application/pdf", style: { width: 220 } }}
+          inputProps={{ accept: "application/pdf" }}
           InputProps={{ endAdornment: <Button type="submit">Upload</Button> }}
           {...register("file", {
             required: "Please select a PDF file before uploading!",

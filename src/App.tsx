@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Grid } from "@mui/material";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/main-components/Navbar";
 import "@fontsource/roboto/700.css";
 import JobGrid from "./components/job-components/JobGrid";
 

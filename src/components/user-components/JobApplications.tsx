@@ -10,21 +10,9 @@ import {
 } from "@mui/material";
 import { UserContext } from "../../App";
 import { getApplications } from "../../services/jobService";
+import { modalStyle } from "../../utils/contants";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 1000,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  height: 400,
-  maxHeight: 400,
-  p: 4,
-  maxWidth: { xs: 200, md: 400, lg: 1000 },
-};
+const style = modalStyle;
 
 export default function JobApplications() {
   const { currentUserId } = useContext(UserContext);
@@ -47,7 +35,11 @@ export default function JobApplications() {
 
   jobs.map((job) => {
     children.push(
-      <ListItem key={job.idjob} style={{ justifyContent: "center" }}>
+      <ListItem
+        key={job.idjob}
+        style={{ justifyContent: "center" }}
+        sx={{ borderBottom: "1px solid black" }}
+      >
         <Typography>
           {job.title} at {job.company}
         </Typography>

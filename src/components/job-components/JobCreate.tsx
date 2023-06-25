@@ -11,19 +11,9 @@ import {
 import { UserContext } from "../../App";
 import { useForm } from "react-hook-form";
 import { createJob } from "../../services/jobService";
+import { modalStyle } from "../../utils/contants";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 1000,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-  maxWidth: { xs: 200, md: 400, lg: 1000 },
-};
+const style = modalStyle;
 
 function JobCreate() {
   const { isRecruiter, currentUserId } = useContext(UserContext);

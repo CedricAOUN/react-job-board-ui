@@ -8,7 +8,7 @@ import RequirementsModal from "./RequirementsModal";
 import Link from "@mui/material/Link";
 import { UserContext } from "../../App";
 import { apply } from "../../services/jobService";
-import ConfirmationModal from "../ConfirmationModal";
+import ConfirmationModal from "../main-components/ConfirmationModal";
 
 interface Props {
   title: string;
@@ -45,14 +45,16 @@ export default function JobCard({
   return (
     <Fragment>
       <Card>
-        <CardContent sx={{ overflow: "hidden", width: "100vw" }}>
+        <CardContent sx={{ overflow: "hidden", maxWidth: "100%" }}>
           <Typography variant={"h6"} sx={{ my: 2 }}>
             {title}
           </Typography>
           <Typography sx={{ my: 2 }}>
             {company} - {location}
           </Typography>
-          <Typography sx={{ my: 4 }}>{description}</Typography>
+          <Typography sx={{ my: 4, wordWrap: "break-word" }}>
+            {description}
+          </Typography>
           <Typography sx={{ color: "#00B588" }}>Salary: {salary}</Typography>
         </CardContent>
         <CardActions>

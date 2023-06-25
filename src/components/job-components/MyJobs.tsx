@@ -7,31 +7,22 @@ import {
   Typography,
   ListItemButton,
   List,
+  Button,
 } from "@mui/material";
 import JobItem from "./JobItem";
 import { UserContext } from "../../App";
 import { fetchMyJobs } from "../../services/jobService";
 import { getCandidates } from "../../services/jobService";
+import { fontSizes, modalStyle } from "../../utils/contants";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 1000,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  maxHeight: 250,
-  p: 4,
-  maxWidth: { xs: 200, md: 400, lg: 1000 },
-};
+const style = modalStyle;
 
 export default function MyJobs() {
   const { currentUserId, isRecruiter } = useContext(UserContext);
   const [jobs, setJobs] = useState([]);
   const [jobChildren, setJobChildren] = useState([]);
   const [candChildren, setCandChildren] = useState([]);
+  const [infoChildren, setInfoChildren] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -103,29 +94,58 @@ export default function MyJobs() {
   };
 
   const buildUserList = (jobId) => {
-    let result = jobs.find((obj) => {
+    let clickedJob = jobs.find((obj) => {
       return obj.idjob === jobId;
     });
-    const final = result.candidates.map((cand) => {
+    const jobCandList = clickedJob.candidates.map((cand) => {
+      const userCapitalized =
+        cand.username.charAt(0).toUpperCase() + cand.username.slice(1);
       return (
         <ListItemButton
+          sx={{ borderBottom: "1px solid black", justifyContent: "center" }}
           key={`cand${cand.user_id}`}
-          onClick={() => {
-            console.log(cand);
-            window.open(
-              `http://localhost:3000/uploads/${cand.user_id}.pdf`,
-              "_blank"
-            );
-          }}
+          // onClick={() => {
+          //   console.log(cand);
+          //   window.open(
+          //     `http://localhost:3000/uploads/${cand.user_id}.pdf`,
+          //     "_blank"
+          //   );
+          // }}
+          onClick={() =>
+            buildUserInfo(
+              userCapitalized,
+              cand.email,
+              `http://localhost:3000/uploads/${cand.user_id}.pdf`
+            )
+          }
         >
-          <Typography>
-            <u>Username</u>: {cand.username}, <u> Email</u>: {cand.email}
+          <Typography
+            fontSize={fontSizes}
+            textAlign={"center"}
+            color={"primary"}
+            fontWeight={"800"}
+          >
+            {userCapitalized}
           </Typography>
         </ListItemButton>
       );
     });
 
-    setCandChildren(final);
+    setCandChildren(jobCandList);
+  };
+
+  const buildUserInfo = (uName, uEmail, cvUrl) => {
+    const userInfo = [
+      <>
+        <Typography variant="h6">{uName}</Typography>
+        <Typography color={"#333333"}>{uEmail}</Typography>
+        <Button href={cvUrl} target="_Blank">
+          CV
+        </Button>
+        <Button href={`mailto:${uEmail}`}>Contact</Button>
+      </>,
+    ];
+    setInfoChildren(userInfo);
   };
 
   return (
@@ -140,11 +160,12 @@ export default function MyJobs() {
       </MenuItem>
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Grid container>
-            <Grid item xs={6}>
+          <Grid container justifyContent={"center"} spacing={1}>
+            <Grid item xs={9} md={10}>
               <Typography
                 textAlign={"center"}
                 sx={{ textDecoration: "underline" }}
+                fontSize={fontSizes}
               >
                 My Job Offers:
               </Typography>
@@ -155,23 +176,25 @@ export default function MyJobs() {
                 sx={{
                   border: "solid 1px black",
                   borderRadius: "5px",
+                  textAlign: "center",
                 }}
               >
                 <List style={{ overflow: "scroll" }}>
                   {jobChildren.length ? (
                     jobChildren
                   ) : (
-                    <Typography textAlign={"center"} minHeight={150}>
+                    <Typography minHeight={150} fontSize={fontSizes}>
                       You haven't created any job offers yet
                     </Typography>
                   )}
                 </List>
               </Box>
             </Grid>
-            <Grid style={{ flexGrow: "1" }} item sx={{ ml: 2 }}>
+            <Grid item xs={3} md={2}>
               <Typography
                 textAlign={"center"}
                 sx={{ textDecoration: "underline" }}
+                fontSize={fontSizes}
               >
                 Candidates:
               </Typography>
@@ -182,17 +205,42 @@ export default function MyJobs() {
                 sx={{
                   border: "solid 1px black",
                   borderRadius: "5px",
+                  textAlign: "center",
                 }}
               >
                 <List style={{ overflow: "scroll" }}>
-                  {candChildren ? (
+                  {candChildren.length ? (
                     candChildren
                   ) : (
-                    <Typography textAlign={"center"}>
-                      Click on a job to view its info!
-                    </Typography>
+                    <Typography fontSize={fontSizes}>N/A</Typography>
                   )}
                 </List>
+              </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                textAlign={"center"}
+                sx={{ textDecoration: "underline" }}
+                fontSize={fontSizes}
+              >
+                Candidate Info:
+              </Typography>
+              <Box
+                minHeight={100}
+                sx={{
+                  border: "solid 1px black",
+                  borderRadius: "5px",
+                  padding: 2,
+                }}
+                textAlign={"center"}
+              >
+                {infoChildren.length ? (
+                  infoChildren
+                ) : (
+                  <Typography>
+                    Please select a candidate to show their info
+                  </Typography>
+                )}
               </Box>
             </Grid>
           </Grid>

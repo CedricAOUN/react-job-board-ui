@@ -2,18 +2,9 @@ import { useState, useContext, useEffect } from "react";
 import { Box, Button, Modal } from "@mui/material";
 import LoginTabs from "./LoginTabs";
 import { UserContext } from "../../App";
+import { modalStyle } from "../../utils/contants";
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+const style = modalStyle;
 
 export default function LoginModal() {
   const { isLoggedIn } = useContext(UserContext);
@@ -28,7 +19,12 @@ export default function LoginModal() {
   return (
     !isLoggedIn && (
       <div>
-        <Button variant="contained" color="secondary" onClick={handleOpen}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpen}
+          sx={{ fontSize: { xs: 12, md: 16 } }}
+        >
           {isLoggedIn ? "Logout" : "Login/SignUp"}
         </Button>
         <Modal

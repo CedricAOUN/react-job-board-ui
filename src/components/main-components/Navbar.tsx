@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import LoginModal from "./user-components/LoginModal";
-import { UserContext } from "../App";
+import LoginModal from "../user-components/LoginModal";
+import { UserContext } from "../../App";
 import DropdownMenu from "./DropdownMenu";
 
 export default function Navbar() {

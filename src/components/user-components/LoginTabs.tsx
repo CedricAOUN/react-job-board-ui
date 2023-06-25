@@ -13,7 +13,7 @@ export default function LoginTabs() {
   return (
     <Box>
       <Box>
-        <Tabs value={tabIndex} onChange={handleTabChange}>
+        <Tabs value={tabIndex} onChange={handleTabChange} centered>
           <Tab label="Login" />
           <Tab label="Sign Up" />
         </Tabs>

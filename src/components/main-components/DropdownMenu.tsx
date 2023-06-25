@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Menu, Fade, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { UserContext } from "../App";
+import { UserContext } from "../../App";
 import ConfirmationModal from "./ConfirmationModal";
-import JobCreate from "./job-components/JobCreate";
-import Profile from "./user-components/Profile";
-import MyJobs from "./job-components/MyJobs";
-import JobApplications from "./user-components/JobApplications";
+import JobCreate from "../job-components/JobCreate";
+import Profile from "../user-components/Profile";
+import MyJobs from "../job-components/MyJobs";
+import JobApplications from "../user-components/JobApplications";
 
 export default function DropdownMenu() {
   const {

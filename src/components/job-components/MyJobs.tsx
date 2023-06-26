@@ -8,12 +8,19 @@ import {
   ListItemButton,
   List,
   Button,
+  IconButton,
 } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import JobItem from "./JobItem";
 import { UserContext } from "../../App";
-import { fetchMyJobs } from "../../services/jobService";
-import { getCandidates } from "../../services/jobService";
+import {
+  getCandidates,
+  deleteJob,
+  fetchMyJobs,
+} from "../../services/jobService";
 import { fontSizes, modalStyle } from "../../utils/contants";
+import ConfirmationModal from "../main-components/ConfirmationModal";
+import { enqueueSnackbar } from "notistack";
 
 const style = modalStyle;
 
@@ -23,6 +30,8 @@ export default function MyJobs() {
   const [jobChildren, setJobChildren] = useState([]);
   const [candChildren, setCandChildren] = useState([]);
   const [infoChildren, setInfoChildren] = useState([]);
+  const [selectedJob, setSelectedJob] = useState();
+  const [selectedJobName, setSelectedJobName] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,6 +45,15 @@ export default function MyJobs() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const refreshList = () => {
+    setJobs([]);
+    setCandChildren([]);
+    setInfoChildren([]);
+    setJobChildren([]);
+    setSelectedJob(undefined);
+    setSelectedJobName("");
+    getCurrentJobs(currentUserId);
   };
 
   let allCands;
@@ -86,6 +104,8 @@ export default function MyJobs() {
           company={job.company}
           fun={() => {
             buildUserList(job.idjob);
+            setSelectedJob(job.idjob);
+            setSelectedJobName(job.title);
           }}
         />
       );
@@ -104,13 +124,6 @@ export default function MyJobs() {
         <ListItemButton
           sx={{ borderBottom: "1px solid black", justifyContent: "center" }}
           key={`cand${cand.user_id}`}
-          // onClick={() => {
-          //   console.log(cand);
-          //   window.open(
-          //     `http://localhost:3000/uploads/${cand.user_id}.pdf`,
-          //     "_blank"
-          //   );
-          // }}
           onClick={() =>
             buildUserInfo(
               userCapitalized,
@@ -148,6 +161,24 @@ export default function MyJobs() {
     setInfoChildren(userInfo);
   };
 
+  const deleteSelectedJob = (jobId) => {
+    deleteJob(jobId)
+      .then(() => {
+        jobChildren.map((job, index) => {
+          if (job.idjob == jobId) {
+            delete jobChildren[index];
+          }
+        });
+        enqueueSnackbar(`Job: ${selectedJobName} has been deleted`, {
+          variant: "warning",
+        });
+        refreshList();
+      })
+      .catch(() => {
+        enqueueSnackbar(`Something went wrong`, { variant: "error" });
+      });
+  };
+
   return (
     <>
       <MenuItem
@@ -159,7 +190,10 @@ export default function MyJobs() {
         My Jobs {isRecruiter ? "" : "(Recruiters Only)"}
       </MenuItem>
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
+        <Box sx={style} fontSize={fontSizes}>
+          <IconButton onClick={() => refreshList()}>
+            <RefreshIcon color="primary" fontSize={"medium"} />
+          </IconButton>
           <Grid container justifyContent={"center"} spacing={1}>
             <Grid item xs={9} md={10}>
               <Typography
@@ -216,6 +250,23 @@ export default function MyJobs() {
                   )}
                 </List>
               </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <ConfirmationModal
+                title={
+                  selectedJobName.length
+                    ? `Delete: ${selectedJobName}`
+                    : "Delete: (Select a job)"
+                }
+                desc={
+                  <Typography>
+                    Are you sure you would like to delete {selectedJobName}?
+                  </Typography>
+                }
+                bColor="#dd3333"
+                disabled={!selectedJobName.length}
+                confirmFunc={() => deleteSelectedJob(selectedJob)}
+              ></ConfirmationModal>
             </Grid>
             <Grid item xs={12}>
               <Typography

@@ -47,6 +47,12 @@ export async function createJob(
   });
 }
 
+export async function deleteJob(jobId): Promise<any> {
+  return await axios.post(`${url}deleteJob`, {
+    jobId: `${jobId}`,
+  });
+}
+
 export async function apply(user_id, job_id): Promise<any> {
   return await axios.post(`${url}apply`, {
     user_id: `${user_id}`,

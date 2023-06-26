@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { Box, Button, TextField, Grid } from "@mui/material";
+import { Box, Button, TextField, Grid, Typography } from "@mui/material";
 import JobCard from "./JobCard";
 import { fetchJobs, jobsList } from "../../services/jobService";
 import { SearchContext } from "../../App";
@@ -92,7 +92,13 @@ export default function JobGrid() {
         </form>
       </Grid>
       <Box overflow={"scroll"} maxHeight="80vh">
-        {children}
+        {children.length ? (
+          children
+        ) : (
+          <Typography m={6}>
+            No results found. Please try a different search term!
+          </Typography>
+        )}
       </Box>
     </>
   );

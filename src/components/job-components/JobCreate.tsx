@@ -12,13 +12,13 @@ import { UserContext } from "../../App";
 import { useForm } from "react-hook-form";
 import { createJob } from "../../services/jobService";
 import { modalStyle } from "../../utils/contants";
+import { enqueueSnackbar } from "notistack";
 
 const style = modalStyle;
 
 function JobCreate() {
   const { isRecruiter, currentUserId } = useContext(UserContext);
   const [open, setOpen] = useState(false);
-  const [serverMsg, setServerMsg] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const form = useForm();
@@ -40,10 +40,11 @@ function JobCreate() {
       refactorSalary(data.salary1, data.salary2)
     )
       .then(() => {
-        setServerMsg("Job added! You are now able to search for it.");
+        enqueueSnackbar("Job Submitted!", { variant: "success" });
+        handleClose();
       })
-      .catch((err) => {
-        console.log("error occured", err);
+      .catch(() => {
+        enqueueSnackbar("Something went wrong...", { variant: "error" });
       });
   };
 
@@ -178,11 +179,6 @@ function JobCreate() {
               })}
             />
             <Button type="submit">Add</Button>
-            <Grid item xs={12}>
-              <Typography color="secondary" textAlign={"center"}>
-                {serverMsg}
-              </Typography>
-            </Grid>
           </Grid>
         </Box>
       </Modal>

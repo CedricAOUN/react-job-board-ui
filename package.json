@@ -17,6 +17,7 @@
     "@mui/material": "^5.13.5",
     "axios": "^1.4.0",
     "mysql2": "^3.3.5",
+    "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-form-data": "^0.2.4",

@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { authLogin, createUser } from "../../services/authService";
 import { UserContext } from "../../App";
+import { enqueueSnackbar } from "notistack";
 
 function Copyright(props: any) {
   return (
@@ -60,20 +61,24 @@ export default function SignUp() {
 
     createUser(data.username, data.password, data.email, data.recruiter)
       .then(function () {
+        enqueueSnackbar(`User created! Welcome ${data.username}`, {
+          variant: "success",
+        });
         authLogin(data.email, data.password).then((res) => {
           setCurrentUserId(`${res.data.userId}`);
           setCurrentUser(`${data.username}`);
           setCurrentEmail(`${data.email}`);
           setIsLoggedIn(true);
           setIsRecruiter(data.recruiter);
+          enqueueSnackbar("Succesfully Logged In!", { variant: "success" });
           return;
         });
       })
       .catch(function (error) {
         if (error.response.status == 500) {
-          setServerMsg("Email already exists");
+          enqueueSnackbar("This Email Already Exists", { variant: "error" });
         } else {
-          setServerMsg("Something went wrong");
+          enqueueSnackbar("Something went wrong", { variant: "error" });
         }
       });
   };

@@ -16,6 +16,7 @@ import { authLogin, deleteUser } from "../../services/authService";
 import { useForm } from "react-hook-form";
 import Upload from "./Upload";
 import { fontSizes, modalStyle } from "../../utils/contants";
+import { enqueueSnackbar } from "notistack";
 
 const style = modalStyle;
 
@@ -56,6 +57,9 @@ export default function Profile({ onClick }: Props) {
   const onDelete = () => {
     deleteUser(currentEmail)
       .then(() => {
+        enqueueSnackbar(`Account: ${currentUser} has been deleted.`, {
+          variant: "warning",
+        });
         setCurrentEmail(""),
           setCurrentUser(""),
           setIsLoggedIn(false),
@@ -92,88 +96,6 @@ export default function Profile({ onClick }: Props) {
             spacing={3}
             overflow={"scroll"}
           >
-            {/* <Grid item xs={6}>
-              <Typography fontWeight={800}>Username:</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography sx={{ textAlign: "right" }}>{currentUser}</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography fontWeight={800}>E-mail:</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography sx={{ textAlign: "right" }}>
-                {currentEmail}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography fontWeight={800}>CV:</Typography>
-            </Grid>
-            <Grid item xs={3}>
-              <Typography>
-                Current CV: {fileName ? fileName : "None"}
-              </Typography>
-              <Upload />
-            </Grid>
-            <Grid item xs={6}>
-              <Typography fontWeight={800}>Recruiter Account:</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography sx={{ textAlign: "right" }}>
-                {isRecruiter ? (
-                  <CheckCircleIcon color="success" />
-                ) : (
-                  <BlockIcon />
-                )}
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ mt: 0.6 }}>
-              <Typography fontWeight={800}>Delete Account:</Typography>
-            </Grid>
-            <Grid item xs={6} component="form" noValidate>
-              <Box display="flex" justifyContent="flex-end">
-                {passVerified ? (
-                  <>
-                    <CheckCircleIcon color="success" sx={{ mt: 0.6 }} />
-                    <Typography fontSize={10} sx={{ mt: 1, mr: 2 }}>
-                      Password Verified
-                    </Typography>
-                    <ConfirmationModal
-                      title="Delete"
-                      desc={
-                        <Typography>
-                          Are you sure you want to delete your account?{" "}
-                        </Typography>
-                      }
-                      confirmFunc={() => {
-                        onDelete();
-                        handleClose();
-                        onClick();
-                      }}
-                      bColor="#E30613"
-                    />
-                  </>
-                ) : (
-                  <TextField
-                    autoFocus
-                    fullWidth
-                    id="password"
-                    label="Please verify your password"
-                    helperText={errorMsg}
-                    error={!!errorMsg}
-                    type="password"
-                    InputProps={{
-                      endAdornment: (
-                        <Button type="submit" onClick={handleSubmit(onSubmit)}>
-                          Verify
-                        </Button>
-                      ),
-                    }}
-                    {...register("password")}
-                  ></TextField>
-                )}
-              </Box>
-            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 disabled
@@ -204,15 +126,10 @@ export default function Profile({ onClick }: Props) {
               <Upload />
             </Grid>
             <Grid item xs={12}>
-              <Box mt={6} justifyContent={"center"}>
-                <Typography textAlign={"center"} fontWeight={800}>
-                  Delete Account:
-                </Typography>
+              <Box mt={6} textAlign={"center"}>
+                <Typography fontWeight={800}>Delete Account:</Typography>
                 {passVerified ? (
                   <>
-                    <Typography fontSize={10} textAlign={"center"}>
-                      Password Verified ✅
-                    </Typography>
                     <ConfirmationModal
                       title="Delete"
                       desc={

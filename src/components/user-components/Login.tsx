@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { authLogin } from "../../services/authService";
 import { UserContext } from "../../App";
+import { enqueueSnackbar } from "notistack";
 
 function Copyright(props: any) {
   return (
@@ -66,9 +67,11 @@ const Login = () => {
           response.data.userType == "regular" || setIsRecruiter(true);
           setHasFile(response.data.hasFile);
           setFileName(response.data.fileName);
+          enqueueSnackbar("Succesfully Logged In!", { variant: "success" });
           return;
         } else {
           console.log(response.error);
+          enqueueSnackbar("Login Failed", { variant: "error" });
           return;
         }
       })

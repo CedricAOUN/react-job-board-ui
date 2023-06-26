@@ -1,12 +1,15 @@
-import { useContext } from "react";
-import { TextField, Box, Button } from "@mui/material";
+import { useContext, useRef } from "react";
+import { TextField, Box, Button, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../App";
 import { uploadFile } from "../../services/authService";
+import { enqueueSnackbar } from "notistack";
 
 function Upload() {
   const { currentUserId, setHasFile, setFileName, fileName } =
     useContext(UserContext);
+
+  const iRef = useRef<HTMLInputElement>(null);
   const form = useForm();
   const {
     register,
@@ -16,21 +19,38 @@ function Upload() {
 
   const onSubmit = (data) => {
     console.log(data.file);
-    uploadFile(currentUserId, data.file[0]).then(() => setHasFile(true));
-    setFileName(data.file[0].name);
+    uploadFile(currentUserId, data.file[0]).then(() => {
+      setHasFile(true);
+      setFileName(data.file[0].name);
+      enqueueSnackbar("CV Submitted!", { variant: "success" });
+      iRef.current.value = "";
+    });
   };
+
+  const fileLink = (
+    <>
+      Current CV:{" "}
+      <Link
+        href={`http://localhost:3000/uploads/${currentUserId}.pdf`}
+        target="_Blank"
+      >
+        {fileName}
+      </Link>
+    </>
+  );
 
   return (
     <>
       <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
         <TextField
+          inputRef={iRef}
           type="file"
           fullWidth
           helperText={
             !!errors.file
               ? errors.file?.message.toString()
               : fileName.length
-              ? `Current CV: ${fileName}`
+              ? fileLink
               : "Current CV: None"
           }
           error={!!errors.file}

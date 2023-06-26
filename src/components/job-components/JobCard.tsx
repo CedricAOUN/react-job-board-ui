@@ -9,6 +9,7 @@ import Link from "@mui/material/Link";
 import { UserContext } from "../../App";
 import { apply } from "../../services/jobService";
 import ConfirmationModal from "../main-components/ConfirmationModal";
+import { enqueueSnackbar, VariantType } from "notistack";
 
 interface Props {
   title: string;
@@ -33,13 +34,17 @@ export default function JobCard({
     useContext(UserContext);
 
   const handleApply = async () => {
-    await apply(currentUserId, jobId).catch((err) => {
-      if (err.response.data.err.errno == 1062) {
-        console.log("You have already applied to this job!");
-      } else {
-        console.log("Something went wrong", err);
-      }
-    });
+    await apply(currentUserId, jobId)
+      .then(() => {
+        enqueueSnackbar("Application submitted", { variant: "success" });
+      })
+      .catch((err) => {
+        if (err.response.data.err.errno == 1062) {
+          enqueueSnackbar("You have already applied to this job!", {
+            variant: "error",
+          });
+        }
+      });
   };
 
   return (

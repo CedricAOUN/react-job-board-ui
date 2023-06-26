@@ -4,6 +4,7 @@ import "./App.css";
 import Navbar from "./components/main-components/Navbar";
 import "@fontsource/roboto/700.css";
 import JobGrid from "./components/job-components/JobGrid";
+import { SnackbarProvider } from "notistack";
 
 export const UserContext = React.createContext(null);
 export const SearchContext = React.createContext(null);
@@ -41,14 +42,16 @@ function App() {
           setFileName: setFileName,
         }}
       >
-        <Navbar></Navbar>
-        <Grid container justifyContent={"center"}>
-          <SearchContext.Provider
-            value={{ jobs, setJobs, searchQuery, setSearchQuery }}
-          >
-            <JobGrid />
-          </SearchContext.Provider>
-        </Grid>
+        <SnackbarProvider style={{ fontFamily: "Roboto" }}>
+          <Navbar></Navbar>
+          <Grid container justifyContent={"center"}>
+            <SearchContext.Provider
+              value={{ jobs, setJobs, searchQuery, setSearchQuery }}
+            >
+              <JobGrid />
+            </SearchContext.Provider>
+          </Grid>
+        </SnackbarProvider>
       </UserContext.Provider>
     </Container>
   );

@@ -28,4 +28,4 @@ Your UI should be up and running with the following in your Terminal/CMD:
 
 You should now have 2 Terminals/CMDs open, one with the server.js, and one with UI.
 
-You may now visit: [http://localhost:5173/](http://localhost:5173/) and test out my application!
+You may now visit: [http://localhost:5173/](http://localhost:5173/) and use the app!

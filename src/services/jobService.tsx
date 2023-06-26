@@ -1,6 +1,10 @@
 import axios from "axios";
 import url from "./urlService";
 
+export function setUserToken(token) {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
+
 export let jobsList = [];
 
 export async function fetchJobs() {

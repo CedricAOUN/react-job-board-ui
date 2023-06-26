@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { authLogin } from "../../services/authService";
 import { UserContext } from "../../App";
 import { enqueueSnackbar } from "notistack";
+import { setUserToken } from "../../services/jobService";
 
 function Copyright(props: any) {
   return (
@@ -67,6 +68,7 @@ const Login = () => {
           response.data.userType == "regular" || setIsRecruiter(true);
           setHasFile(response.data.hasFile);
           setFileName(response.data.fileName);
+          setUserToken(response.data.token);
           enqueueSnackbar("Succesfully Logged In!", { variant: "success" });
           return;
         } else {

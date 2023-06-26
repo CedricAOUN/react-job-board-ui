@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { authLogin, createUser } from "../../services/authService";
 import { UserContext } from "../../App";
 import { enqueueSnackbar } from "notistack";
+import { setUserToken } from "../../services/jobService";
 
 function Copyright(props: any) {
   return (
@@ -48,7 +49,6 @@ export default function SignUp() {
     setCurrentEmail,
     setCurrentUserId,
   } = useContext(UserContext);
-  const [serverMsg, setServerMsg] = useState("");
   const form = useForm();
   const {
     register,
@@ -70,6 +70,7 @@ export default function SignUp() {
           setCurrentEmail(`${data.email}`);
           setIsLoggedIn(true);
           setIsRecruiter(data.recruiter);
+          setUserToken(res.data.token);
           enqueueSnackbar("Succesfully Logged In!", { variant: "success" });
           return;
         });
@@ -182,9 +183,6 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid item xs={12} textAlign={"center"}>
-              <Typography color="secondary">{serverMsg}</Typography>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

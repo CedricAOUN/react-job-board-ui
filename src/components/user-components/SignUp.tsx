@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import {
   Avatar,
   Button,
@@ -20,7 +20,7 @@ import { UserContext } from "../../App";
 import { enqueueSnackbar } from "notistack";
 import { setUserToken } from "../../services/jobService";
 
-function Copyright(props: any) {
+function Copyright(props) {
   return (
     <Typography
       variant="body2"

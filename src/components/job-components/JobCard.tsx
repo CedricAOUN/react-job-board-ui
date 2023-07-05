@@ -1,15 +1,14 @@
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import RequirementsModal from "./RequirementsModal";
 import Link from "@mui/material/Link";
 import { UserContext } from "../../App";
 import { apply } from "../../services/jobService";
 import ConfirmationModal from "../main-components/ConfirmationModal";
-import { enqueueSnackbar, VariantType } from "notistack";
+import { enqueueSnackbar } from "notistack";
 
 interface Props {
   title: string;
@@ -18,7 +17,7 @@ interface Props {
   company: string;
   location: string;
   requirements: string;
-  jobId: Number;
+  jobId: number;
 }
 
 export default function JobCard({

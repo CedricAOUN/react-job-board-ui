@@ -9,8 +9,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/material";
 import { UserContext } from "../../App";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import BlockIcon from "@mui/icons-material/Block";
 import ConfirmationModal from "../main-components/ConfirmationModal";
 import { authLogin, deleteUser } from "../../services/authService";
 import { useForm } from "react-hook-form";
@@ -34,7 +32,6 @@ export default function Profile({ onClick }: Props) {
     setIsLoggedIn,
     setIsRecruiter,
     setHasFile,
-    fileName,
   } = useContext(UserContext);
   const [passVerified, setPassVerified] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");

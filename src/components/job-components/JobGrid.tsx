@@ -97,7 +97,7 @@ export default function JobGrid() {
         ) : (
           <Typography m={6}>
             No results found. Please try a different search term! (This is a preview. To load up some mock data into the app, please follow the instructions layed out  
-            <a href="https://github.com/CedricAOUN/react-job-board-backend" target="_blank">here</a>)
+            <a href="https://github.com/CedricAOUN/react-job-board-backend" target="_blank"> here</a>)
           </Typography>
         )}
       </Box>
